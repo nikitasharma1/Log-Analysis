@@ -1,0 +1,112 @@
+1. Create view "article_views"
+
+news=> CREATE VIEW article_views AS
+news-> SELECT articles.author, articles.id, articles.title, COUNT(*) AS article_view_count
+news-> FROM articles, log
+news-> WHERE log.path LIKE '%'||articles.slug
+news-> GROUP BY articles.id
+news-> ORDER BY article_view_count DESC;
+CREATE VIEW
+
+news=> select * from article_views;
+
+ author | id |               title                | article_view_count
+--------+----+------------------------------------+--------------------
+      2 | 26 | Candidate is jerk, alleges rival   |             338647
+      1 | 25 | Bears love berries, alleges bear   |             253801
+      3 | 23 | Bad things gone, say good people   |             170098
+      1 | 27 | Goats eat Google's lawn            |              84906
+      2 | 30 | Trouble for troubled troublemakers |              84810
+      4 | 24 | Balloon goons doomed               |              84557
+      1 | 29 | There are a lot of bears           |              84504
+      1 | 28 | Media obsessed with bears          |              84383
+(8 rows)
+
+2. Create view daywise_status_log
+
+news=> CREATE VIEW daywise_status_log AS
+news-> SELECT time::timestamp::date AS day,
+news-> SUM(CASE WHEN status='404 NOT FOUND' THEN 1 ELSE 0 END) AS error,
+news-> SUM(1) AS total_requests
+news-> FROM log
+news-> GROUP BY day;
+CREATE VIEW
+
+news=> select * from daywise_status_log;
+
+    day     | error | total_requests
+------------+-------+----------------
+ 2016-07-01 |   274 |          38705
+ 2016-07-02 |   389 |          55200
+ 2016-07-03 |   401 |          54866
+ 2016-07-04 |   380 |          54903
+ 2016-07-05 |   423 |          54585
+ 2016-07-06 |   420 |          54774
+ 2016-07-07 |   360 |          54740
+ 2016-07-08 |   418 |          55084
+ 2016-07-09 |   410 |          55236
+ 2016-07-10 |   371 |          54489
+ 2016-07-11 |   403 |          54497
+ 2016-07-12 |   373 |          54839
+ 2016-07-13 |   383 |          55180
+ 2016-07-14 |   383 |          55196
+ 2016-07-15 |   408 |          54962
+ 2016-07-16 |   374 |          54498
+ 2016-07-17 |  1265 |          55907
+ 2016-07-18 |   374 |          55589
+ 2016-07-19 |   433 |          55341
+ 2016-07-20 |   383 |          54557
+ 2016-07-21 |   418 |          55241
+ 2016-07-22 |   406 |          55206
+ 2016-07-23 |   373 |          54894
+ 2016-07-24 |   431 |          55100
+ 2016-07-25 |   391 |          54613
+ 2016-07-26 |   396 |          54378
+ 2016-07-27 |   367 |          54489
+ 2016-07-28 |   393 |          54797
+ 2016-07-29 |   382 |          54951
+ 2016-07-30 |   397 |          55073
+ 2016-07-31 |   329 |          45845
+(31 rows)
+
+
+Log analysis:
+_____________
+Q1. What are the most popular three articles of all time?
+
+news=> select title, article_view_count from article_views limit 3;
+
+              title               | article_view_count
+----------------------------------+--------------------
+ Candidate is jerk, alleges rival |             338647
+ Bears love berries, alleges bear |             253801
+ Bad things gone, say good people |             170098
+(3 rows)
+
+Q2. Who are the most popular article authors of all time?
+
+
+news=> select authors.name, sum(article_views.article_view_count)
+news-> as author_view_count from article_views, authors
+news-> where article_views.author=authors.id
+news-> group by authors.id
+news-> order by author_view_count desc;
+
+          name          | author_view_count
+------------------------+-------------------
+ Ursula La Multa        |            507594
+ Rudolf von Treppenwitz |            423457
+ Anonymous Contributor  |            170098
+ Markoff Chaney         |             84557
+(4 rows)
+
+Q3. On which days did more than 1% of requests lead to errors?
+
+news=> select day, error, total_requests from daywise_status_log
+news-> where error > (0.01 * total_requests)
+news-> order by day;
+
+    day     | error | total_requests
+------------+-------+----------------
+ 2016-07-17 |  1265 |          55907
+(1 row)
