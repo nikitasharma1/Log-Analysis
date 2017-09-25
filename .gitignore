@@ -1,0 +1,4 @@
+*.pyc
+questions.txt
+sql_queries.txt
+tablesinfo.txt
