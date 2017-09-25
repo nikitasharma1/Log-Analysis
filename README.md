@@ -16,9 +16,9 @@ To build an internal reporting tool for a newspaper site, that will use informat
 $ git clone https://github.com/nikitasharma1/Log-Analysis.git
 ```
 
-- or_ download the _.zip_ file [here]()
-- Download data [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) and extract file "newsdata.sql"
-- If using vitual environment to run and connect to database, cd into the corresponding directory and move the project folder and "newsdata.sql" i.e. inside this directory
+- or_ download the _.zip_ file [here](https://github.com/nikitasharma1/Log-Analysis/archive/master.zip)
+- Download data [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) and extract file **newsdata.sql**
+- If using vitual environment to run and connect to database, cd into the corresponding directory and move the project folder and "newsdata.sql" inside this directory
 - Run following command to load database
 
 ```
@@ -52,7 +52,6 @@ GROUP BY day;
 ```
 
 - Type ```\q``` and press _Enter_ to exit psql command line utility
-
 - Run script **log_analysis.py**
 
 ```
