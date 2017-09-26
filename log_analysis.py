@@ -7,17 +7,24 @@ from log_analysis_db import top3_articles, top_authors, error_gt_1percent
 # Create Flask object
 app = Flask(__name__)
 
+# Create variable to store database name
+DBNAME = "news"
+
 
 # Bind url "host:port/" to function "main"
 @app.route("/", methods=["GET"])
-def main():
-    # Get data (i.e. top 3 articles,
-    # top authors and
+def main(database=DBNAME):
+    """Insert data into template,
+    Render template"""
+
+    # Get data
+    # (i.e. top 3 articles, top authors and
     # day with error requests > one percent)
     # returned by methods in "log_analysis_db.py"
-    article_logs = top3_articles()
-    author_logs = top_authors()
-    error_logs = error_gt_1percent()
+    article_logs = top3_articles(database)
+    author_logs = top_authors(database)
+    error_logs = error_gt_1percent(database)
+
     # render template "log_analysis.html"
     # inserted with fetched data
     return render_template("log_analysis.html",
