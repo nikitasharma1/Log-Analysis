@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Import Modules
 from flask import Flask, url_for, render_template
 from log_analysis_db import top3_articles, top_authors, error_gt_1percent
