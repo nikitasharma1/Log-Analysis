@@ -9,7 +9,7 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- Custom CSS -->
-	<link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
+	<!-- <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}"> -->
 </head>
 <body>
 	<header class="container">
@@ -70,6 +70,7 @@
 							<th>Day</th>
 							<th>Errors</th>
 							<th>Total Requests</th>
+							<th>Error Percentage</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -78,6 +79,7 @@
 							<td>{{log[0]}}</td>
 							<td>{{log[1]}}</td>
 							<td>{{log[2]}}</td>
+							<td>{{'%.2f' % log[3]}} %</td>
 						</tr>
 						{% endfor %}
 					</tbody>

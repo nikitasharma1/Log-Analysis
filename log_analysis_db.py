@@ -49,7 +49,9 @@ def error_gt_1percent():
     """To find days On which more than 1% of requests lead to errors"""
 
     # Create query
-    query = """SELECT day, error, total_requests
+    query = """SELECT day, error, total_requests,
+    (CAST(error AS float)/CAST(total_requests AS float)) * 100
+    AS error_percentage
     FROM daywise_status_log
     WHERE error > (0.01 * total_requests)
     ORDER BY day;"""
