@@ -28,14 +28,14 @@
 					<thead>
 						<tr>
 							<th>Title</th>
-							<th>Views</th>
+							<th class="text-right">Views</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for log in article_logs %}
 						<tr>
 							<td>{{log[0]}}</td>
-							<td>{{log[1]}}</td>
+							<td class="text-right">{{log[1]}}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -48,14 +48,14 @@
 					<thead>
 						<tr>
 							<th>Name</th>
-							<th>Views</th>
+							<th class="text-right">Views</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for log in author_logs %}
 						<tr>
 							<td>{{log[0]}}</td>
-							<td>{{log[1]}}</td>
+							<td class="text-right">{{log[1]}}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -68,18 +68,18 @@
 					<thead>
 						<tr>
 							<th>Day</th>
-							<th>Errors</th>
-							<th>Total Requests</th>
-							<th>Error Percentage</th>
+							<th class="text-right">Errors</th>
+							<th class="text-right">Total Requests</th>
+							<th class="text-right">Error Percentage</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for log in error_logs %}
 						<tr>
 							<td>{{log[0]}}</td>
-							<td>{{log[1]}}</td>
-							<td>{{log[2]}}</td>
-							<td>{{'%.2f' % log[3]}} %</td>
+							<td class="text-right">{{log[1]}}</td>
+							<td class="text-right">{{log[2]}}</td>
+							<td class="text-right">{{'%.2f' % log[3]}} %</td>
 						</tr>
 						{% endfor %}
 					</tbody>
